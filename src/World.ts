@@ -16,8 +16,8 @@ export class World {
         return this.LocationsWithAliveCells
     }
 
-    public isThereALivingCellAt(location: Location){
-
+    public isThereALivingCellAt(location: Location): boolean {
+        return this.LocationsWithAliveCells.indexOf(location) !== -1
     }
 
     public tick(): void {
