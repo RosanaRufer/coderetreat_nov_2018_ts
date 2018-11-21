@@ -12,6 +12,7 @@
     "test:watch": "yarn test --watchAll",
     "lint": "yarn lint:ts",
     "lint:ts": "tslint src/**/*.ts",
+    "lint:fix": "node_modules/.bin/tslint --fix src/**/*.ts",
     "compile": "yarn lint && yarn compile:ts",
     "compile:watch": "yarn compile:ts -w",
     "compile:ts": "tsc --project tsconfig.json"
