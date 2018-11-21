@@ -26,13 +26,31 @@ describe('isThereALivingCellAt', () => {
         const alive = world.isThereALivingCellAt(irrelevantLocation)
         expect(alive).toBeFalsy()
     })
-
-    it('For a world that has a given cell, such cell should be alive', () => {
+    it('For a world with a given alive cell, such cell should initially be alive', () => {
         const world = new World()
         const irrelevantLocation = new Location(1, 1)
         world.addLivingCellAt(irrelevantLocation)
         const alive = world.isThereALivingCellAt(irrelevantLocation)
         expect(alive).toBeTruthy()
+    })
+})
+
+describe('getAliveNeighbors', () => {
+    it('For a cell with no neighbors, should not return any location', () => {
+        const aLocation = new Location(1, 2)
+        const world = new World()
+        world.addLivingCellAt(aLocation)
+
+        expect(world.getAliveNeighborsForLocation(aLocation)).toEqual([])
+    })
+    it('For a cell with two alive neighbors, should return all neighbors', () => {
+        const aLocation = new Location(1, 2)
+        const aFirstNeighbor = aLocation.getNeighbors()[0]
+        const aSecondNeighbor = aLocation.getNeighbors()[1]
+        const world = new World()
+        world.addLivingCellsAt([aLocation, aFirstNeighbor, aSecondNeighbor])
+
+        expect(world.getAliveNeighborsForLocation(aLocation)).toEqual([aFirstNeighbor, aSecondNeighbor])
     })
 })
 

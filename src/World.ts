@@ -17,7 +17,10 @@ export class World {
     }
 
     public isThereALivingCellAt(location: Location): boolean {
-        return this.LocationsWithAliveCells.indexOf(location) !== -1
+        return this.LocationsWithAliveCells
+                        .find((aliveCell) =>
+                            aliveCell.x === location.x &&
+                            aliveCell.y === location.y) !== undefined
     }
 
     public willCellSurvive(neighboursCount: number): boolean {
@@ -31,6 +34,16 @@ export class World {
 
     public tick(): void {
         const nextAliveCellsLocations: Location[] = []
+        this.LocationsWithAliveCells.forEach((location: Location) => {
+            const aliveNeigboursCount = this.getAliveNeighborsForLocation(location).length
+            if (this.willCellSurvive(aliveNeigboursCount)) {
+                nextAliveCellsLocations.push(location)
+            }
+        })
         this.LocationsWithAliveCells = nextAliveCellsLocations
+    }
+
+    public getAliveNeighborsForLocation(aLocation: Location): Location[] {
+        return aLocation.getNeighbors().filter((location) => this.isThereALivingCellAt(location))
     }
 }
