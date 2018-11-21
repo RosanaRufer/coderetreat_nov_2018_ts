@@ -30,7 +30,7 @@ describe('isThereALivingCellAt', () => {
     it('For a world that has a given cell, such cell should be alive', () => {
         const world = new World()
         const irrelevantLocation = new Location(1, 1)
-        world.addLivingCellAt(irrelevantLocation);
+        world.addLivingCellAt(irrelevantLocation)
         const alive = world.isThereALivingCellAt(irrelevantLocation)
         expect(alive).toBeTruthy()
     })
@@ -43,5 +43,14 @@ describe('tick', () => {
         world.addLivingCellAt(aLocation)
         world.tick()
         expect(world.getAliveCellsLocations()).toEqual([])
+    })
+    it('Given a world with a cell with three neighbors, the cell should survive', () => {
+        const aLocation = new Location(1, 2)
+        const aFirstNeighbor = aLocation.getNeighbors()[0]
+        const aSecondNeighbor = aLocation.getNeighbors()[1]
+        const world = new World()
+        world.addLivingCellsAt([aLocation, aFirstNeighbor, aSecondNeighbor])
+        world.tick()
+        expect(world.isThereALivingCellAt(aLocation)).toBeTruthy()
     })
 })

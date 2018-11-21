@@ -20,6 +20,15 @@ export class World {
         return this.LocationsWithAliveCells.indexOf(location) !== -1
     }
 
+    public willCellSurvive(neighboursCount: number): boolean {
+        return neighboursCount === 2 ||
+               neighboursCount === 3
+    }
+
+    public willCellResurrect(neighboursCount: number): boolean {
+        return neighboursCount === 2
+    }
+
     public tick(): void {
         const nextAliveCellsLocations: Location[] = []
         this.LocationsWithAliveCells = nextAliveCellsLocations
