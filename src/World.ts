@@ -16,6 +16,10 @@ export class World {
         return this.LocationsWithAliveCells
     }
 
+    public isThereALivingCellAt(location: Location){
+
+    }
+
     public tick(): void {
         const nextAliveCellsLocations: Location[] = []
         this.LocationsWithAliveCells = nextAliveCellsLocations

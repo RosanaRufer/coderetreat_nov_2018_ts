@@ -5,6 +5,16 @@ export class Location {
         this.x = x
         this.y = y
     }
+    public getNeighbors(): Location[] {
+        const x = this.x
+        const y = this.y
+        return [
+            new Location(x - 1, y - 1), new Location(x, y - 1),
+            new Location(x + 1, y - 1), new Location(x - 1, y),
+            new Location(x + 1, y), new Location(x - 1, y + 1),
+            new Location(x, y + 1), new Location(x + 1, y + 1)
+        ]
+    }
 }
 export class Cell {
 
