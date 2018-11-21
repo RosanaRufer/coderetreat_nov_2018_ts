@@ -18,5 +18,6 @@ export class World {
 
     public tick(): void {
         const nextAliveCellsLocations: Location[] = []
+        this.LocationsWithAliveCells = nextAliveCellsLocations
     }
 }

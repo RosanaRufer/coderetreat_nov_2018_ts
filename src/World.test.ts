@@ -20,6 +20,7 @@ describe('tick', () => {
         const aLocation = new Location(1, 2)
         const world = new World()
         world.addLivingCellAt(aLocation)
+        world.tick()
         expect(world.getAliveCellsLocations()).toEqual([])
     })
 })
