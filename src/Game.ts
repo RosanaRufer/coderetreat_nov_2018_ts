@@ -1,4 +1,5 @@
-import {Cell, Location} from './Cell'
+import {Cell} from './Cell'
+import {Location} from './Location'
 import {World} from './World'
 
 export function game() {

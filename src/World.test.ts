@@ -1,4 +1,5 @@
-import {Cell, Location} from './Cell'
+import {Cell} from './Cell'
+import {Location} from './Location'
 import {World} from './World'
 
 describe('getAliveLocations', () => {
@@ -62,12 +63,48 @@ describe('tick', () => {
         world.tick()
         expect(world.getAliveCellsLocations()).toEqual([])
     })
-    it('Given a world with a cell with three neighbors, the cell should survive', () => {
+    it('Given a world with a cell with two neighbors, the cell should survive', () => {
         const aLocation = new Location(1, 2)
-        const aFirstNeighbor = aLocation.getNeighbors()[0]
-        const aSecondNeighbor = aLocation.getNeighbors()[1]
+        const locationNeighbors = aLocation.getNeighbors()
+        const aFirstNeighbor = locationNeighbors[0]
+        const aSecondNeighbor = locationNeighbors[1]
         const world = new World()
         world.addLivingCellsAt([aLocation, aFirstNeighbor, aSecondNeighbor])
+        world.tick()
+        expect(world.isThereALivingCellAt(aLocation)).toBeTruthy()
+    })
+    it('Given a world with a cell with three alive neighbors, the cell should survive', () => {
+        const aLocation = new Location(1, 2)
+        const locationNeighbors = aLocation.getNeighbors()
+        const aFirstNeighbor = locationNeighbors[0]
+        const aSecondNeighbor = locationNeighbors[1]
+        const aThirdNeighbor = locationNeighbors[2]
+        const world = new World()
+        world.addLivingCellsAt([aLocation, aFirstNeighbor, aSecondNeighbor, aThirdNeighbor])
+        world.tick()
+        expect(world.isThereALivingCellAt(aLocation)).toBeTruthy()
+    })
+    it('Given a world with a cell with four alive neighbors, the cell should die', () => {
+        const aLocation = new Location(1, 2)
+        const locationNeighbors = aLocation.getNeighbors()
+        const aFirstNeighbor = locationNeighbors[0]
+        const aSecondNeighbor = locationNeighbors[1]
+        const aThirdNeighbor = locationNeighbors[2]
+        const aFourthghbor = locationNeighbors[3]
+        const world = new World()
+        world.addLivingCellsAt([aLocation, aFirstNeighbor, aSecondNeighbor, aThirdNeighbor, aFourthghbor])
+        world.tick()
+        expect(world.isThereALivingCellAt(aLocation)).toBeFalsy()
+    })
+
+    it('Given a world with a dead cell with 4 neighbors, the cell should resurrect', () => {
+        const aLocation = new Location(1, 2)
+        const locationNeighbors = aLocation.getNeighbors()
+        const aFirstNeighbor = locationNeighbors[0]
+        const aSecondNeighbor = locationNeighbors[1]
+        const aThirdNeighbor = locationNeighbors[2]
+        const world = new World()
+        world.addLivingCellsAt([aFirstNeighbor, aSecondNeighbor, aThirdNeighbor])
         world.tick()
         expect(world.isThereALivingCellAt(aLocation)).toBeTruthy()
     })

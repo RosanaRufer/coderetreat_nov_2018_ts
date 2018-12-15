@@ -1,4 +1,5 @@
-import {Cell, Location} from './Cell'
+import {Cell} from './Cell'
+import {Location} from './Location'
 
 describe('Tests for Cell', () => {
     it('should know whether its alive or not', () => {

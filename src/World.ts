@@ -1,4 +1,4 @@
-import {Location} from './Cell'
+import {Location} from './Location'
 
 export class World {
 
@@ -28,19 +28,37 @@ export class World {
                neighboursCount === 3
     }
 
-    public willCellResurrect(neighboursCount: number): boolean {
-        return neighboursCount === 2
-    }
-
     public tick(): void {
         const nextAliveCellsLocations: Location[] = []
+        // this.LocationsWithAliveCells.forEach((location: Location) => {
+        //     const aliveNeigboursCount = this.getAliveNeighborsForLocation(location).length
+        //     if (this.willCellSurvive(aliveNeigboursCount)) {
+        //         nextAliveCellsLocations.push(location)
+        //     }
+        // })
+        // this.LocationsWithAliveCells = nextAliveCellsLocations
+
+        const potentiallyAlive: Location[] = []
         this.LocationsWithAliveCells.forEach((location: Location) => {
-            const aliveNeigboursCount = this.getAliveNeighborsForLocation(location).length
-            if (this.willCellSurvive(aliveNeigboursCount)) {
-                nextAliveCellsLocations.push(location)
-            }
+            const neighbors = location.getNeighbors()
+            potentiallyAlive.push(...neighbors)
         })
-        this.LocationsWithAliveCells = nextAliveCellsLocations
+
+        const aliveNeighborCount = potentiallyAlive.reduce( (accumulator: any, current: Location) => {
+            const key = `${current.x}, ${current.y}`
+            accumulator[key] = accumulator[key] ? accumulator[key] + 1 : 1
+            return accumulator
+        }, {})
+
+        const willSurvive = this.LocationsWithAliveCells.reduce( (accumulator: any, current: Location) => {
+            const count = aliveNeighborCount[`${current.x}, ${current.y}`]
+            if (count === 2 || count === 3) {
+                accumulator.push(current)
+            }
+            return accumulator
+        }, [])
+
+        this.LocationsWithAliveCells = willSurvive
     }
 
     public getAliveNeighborsForLocation(aLocation: Location): Location[] {
