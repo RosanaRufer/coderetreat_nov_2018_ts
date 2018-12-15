@@ -58,7 +58,15 @@ export class World {
             return accumulator
         }, [])
 
-        this.LocationsWithAliveCells = willSurvive
+        const willResurrect = potentiallyAlive.reduce( (accumulator: any, current: Location) => {
+            const count = aliveNeighborCount[`${current.x}, ${current.y}`]
+            if (count === 3) {
+                accumulator.push(current)
+            }
+            return accumulator
+        }, [])
+
+        this.LocationsWithAliveCells = willSurvive.concat(willResurrect)
     }
 
     public getAliveNeighborsForLocation(aLocation: Location): Location[] {
